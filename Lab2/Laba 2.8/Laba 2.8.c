@@ -1,3 +1,39 @@
+Цепочка открыта.Одно непрочитанное сообщение.
+
+Перейти к содержимому
+Gmail используется с программой чтения с экрана
+Разрешите уведомления Gmail на рабочем столе.
+ОК  Нет, спасибо
+1 из 2 651
+лаб 1 и 8
+Входящие
+
+Ращиков Владимир Иванович
+Приложения
+20:11 (2 часа назад)
+кому : мне
+
+Поправил, чтобы запускались.Надо добавить освобождение памяти
+
+
+
+С уважением,
+
+Ращиков В.И.
+
+
+
+From: Тимофей Ращиков <timoferaa@gmail.com>
+Sent : Friday, October 25, 2024 1 : 57 PM
+To : Ращиков Владимир Иванович <VIRashchikov@mephi.ru>
+Subject : Ду сем 8 пз + дз
+
+
+
+Матана не было сегодня
+
+2 прикрепленных файла
+• Просканировано системой Gmail
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
@@ -109,7 +145,8 @@ char digit_to_char(int digit) {
     }
 }
 
-int max(int a, int b) {
+//int max(int a, int b) { change max to mymax further everywhere
+int mymax(int a, int b) {
     if (a > b) {
         return a;
     }
@@ -120,29 +157,30 @@ int max(int a, int b) {
 
 int add_in_base(int base, char** answer, int* size_of_answer, char* new_number) {
     int len_answer = size_of_str(answer[0]);
-    char summand[size_of_str(new_number)];
+    //char summand[size_of_str(new_number)];
+    char* summand = (char*)malloc(size_of_str(new_number));
     delete_zeros(new_number, summand);
 
     int len_new = size_of_str(summand);
-    int max_len = max(len_answer, len_new);
+    int mymax_len = mymax(len_answer, len_new);
     int carry = 0;
     int i;
-    if (max_len + 1 > *size_of_answer) {
-        char* yu = (char*)realloc(*answer, (max_len + 2) * sizeof(char));
+    if (mymax_len + 1 > *size_of_answer) {
+        char* yu = (char*)realloc(*answer, (mymax_len + 2) * sizeof(char));
         if (yu == NULL) {
             free(*answer);
             return memory_mistake;
         }
         *answer = yu;
-        *size_of_answer = max_len + 2;
+        *size_of_answer = mymax_len + 2;
     }
-    for (i = len_answer; i < max_len + 1; i++) {
+    for (i = len_answer; i < mymax_len + 1; i++) {
         (*answer)[i] = '0';
     }
-    (*answer)[max_len + 1] = '\0';
+    (*answer)[mymax_len + 1] = '\0';
     int digit_answer;
     int digit_new;
-    for (i = 0; i < max_len; i++) {
+    for (i = 0; i < mymax_len; i++) {
         int current = len_answer - 1 - i;
         if (i < len_answer) {
             digit_answer = char_to_digit((*answer)[current]);
@@ -161,7 +199,7 @@ int add_in_base(int base, char** answer, int* size_of_answer, char* new_number) 
         }
         int sum = digit_answer + digit_new + carry;
         carry = sum / base;
-        (*answer)[max_len - i] = digit_to_char(sum % base);
+        (*answer)[mymax_len - i] = digit_to_char(sum % base);
     }
     if (carry > 0) {
         (*answer)[0] = digit_to_char(carry);
@@ -170,10 +208,10 @@ int add_in_base(int base, char** answer, int* size_of_answer, char* new_number) 
         }
     }
     else {
-        for (i = 0; i < max_len; i++) {
+        for (i = 0; i < mymax_len; i++) {
             (*answer)[i] = (*answer)[i + 1];
         }
-        (*answer)[max_len] = '\0';
+        (*answer)[mymax_len] = '\0';
     }
     return 0;
 }
@@ -220,3 +258,5 @@ int main() {
     free(answer);
     return 0;
 }
+task 8.c
+Отображается файл "task 1.c"
